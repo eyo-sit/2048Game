@@ -43,6 +43,7 @@ public class State implements GameState {
 			randomindex = rand.nextInt(16);
 		}
 		tilebin[randomindex] = new Random().nextBoolean() ? 2 : 4;
+		System.out.println("Random index is " + randomindex);
 		return true;
 //		return false;
 	}
@@ -55,6 +56,7 @@ public class State implements GameState {
 				return false;
 			}
 		}
+//		System.out.println("Finally");
 		return true;
 	}
 
@@ -102,15 +104,51 @@ public class State implements GameState {
 
 	@Override
 	public int left() {
+		int score = 0;
 		// TODO Auto-generated method stub
-		
-		return 0;
+		for(int i = 4; i < 16; i++) {
+			if(tilebin[i] == tilebin[i - 4]) {
+			score += tilebin[i]*2;
+			tilebin[i-4] = tilebin[i] * 2;
+			tilebin[i] = 0;
+			}else {
+				int currentindex = i;
+				while((currentindex - 4) >= 0 && tilebin[currentindex-4] == 0) {
+					tilebin[currentindex-4] =  tilebin[currentindex];
+					tilebin[currentindex] = 0;
+					currentindex -= 4;
+				}
+				if((currentindex - 4) >= 0 &&tilebin[currentindex] == tilebin[currentindex - 4]) {
+					score += tilebin[currentindex]*2;
+					tilebin[currentindex-4] = tilebin[currentindex] * 2;
+					tilebin[currentindex] = 0;
+					System.out.println("yes");
+				}
+			}
+		}
+		return score;
 	}
 
 	@Override
 	public int right() {
 		// TODO Auto-generated method stub
-		return 0;
+		int score = 0;
+		// TODO Auto-generated method stub
+		for(int i = 0; i < 12; i++) {
+			if(tilebin[i] == tilebin[i + 4]) {
+			score += tilebin[i]*2;
+			tilebin[i+4] = tilebin[i] * 2;
+			tilebin[i] = 0;
+			}else {
+				int currentindex = i;
+				while((currentindex + 4) <= 15 && tilebin[currentindex+4] == 0) {
+					tilebin[currentindex+4] =  tilebin[currentindex];
+					tilebin[currentindex] = 0;
+					currentindex += 4;
+				}
+			}
+		}
+		return score;
 	}
 
 	@Override
