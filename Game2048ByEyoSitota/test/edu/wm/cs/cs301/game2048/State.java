@@ -85,13 +85,26 @@ public class State implements GameState {
 	@Override
 	public boolean reachedThreshold() {
 		// TODO Auto-generated method stub
+		for(int i = 0; i < 16; i++) {
+			if(tilebin[i] >= 2048){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void setValue(int x, int y, int value) {
 		// TODO Auto-generated method stub
-		
+		int index = 0;
+		// TODO Auto-generated method stub
+		for (int i = 0; i < x; i++) {
+			index += 4;
+			}
+		for (int j = 0; j < y; j++) {
+			index += 1;
+			}
+		tilebin[index] = value;
 	}
 
 	@Override
