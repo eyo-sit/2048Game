@@ -122,7 +122,7 @@ public class State implements GameState {
 					if(currentindex - 4>=0 && tilebin[currentindex]==tilebin[currentindex - 4]) {
 						tilebin[currentindex] = 0;
 						tilebin[currentindex - 4] *= 2;
-						score += tilebin[currentindex];
+						score += tilebin[currentindex - 4];
 					}
 				}
 			}
@@ -151,7 +151,7 @@ public class State implements GameState {
 					if(currentindex + 4<16 && tilebin[currentindex]==tilebin[currentindex + 4]) {
 						tilebin[currentindex] = 0;
 						tilebin[currentindex + 4] *= 2;
-						score += tilebin[currentindex];
+						score += tilebin[currentindex + 4];
 					}
 				}
 			}
@@ -162,13 +162,59 @@ public class State implements GameState {
 	@Override
 	public int down() {
 		// TODO Auto-generated method stub
-		return 0;
+		int score = 0;
+		// TODO Auto-generated method stub
+		for(int j = 14; j >= 0; j-=4) {
+			for(int i = j; i%4 != 3 && i >= 0; i--) {
+				if(tilebin[i] == tilebin[i + 1]) {
+				score += tilebin[i]*2;
+				tilebin[i+1] = tilebin[i] * 2;
+				tilebin[i] = 0;
+				}else if(tilebin[i + 1]==0){
+					int currentindex = i;
+					while((currentindex + 1)%4!= 0 && currentindex + 1 < 16 &&tilebin[currentindex+1] == 0) {
+						tilebin[currentindex+1] =  tilebin[currentindex];
+						tilebin[currentindex] = 0;
+						currentindex += 1;
+					}
+					if((currentindex + 1)%4!=0 && currentindex + 1 < 16 && tilebin[currentindex]==tilebin[currentindex + 1]) {
+						tilebin[currentindex] = 0;
+						tilebin[currentindex + 1] *= 2;
+						score += tilebin[currentindex + 1];
+					}
+				}
+			}
+		}
+		return score;
 	}
 
 	@Override
 	public int up() {
 		// TODO Auto-generated method stub
-		return 0;
+		int score = 0;
+		// TODO Auto-generated method stub
+		for(int j = 1; j <= 13; j+=4) {
+			for(int i = j; i%4 != 0 && i >= 0; i++) {
+				if(tilebin[i] == tilebin[i - 1]) {
+				score += tilebin[i]*2;
+				tilebin[i-1] = tilebin[i] * 2;
+				tilebin[i] = 0;
+				}else if(tilebin[i - 1]==0){
+					int currentindex = i;
+					while((currentindex - 1)%4!= 3 && currentindex - 1 >= 0 &&tilebin[currentindex-1] == 0) {
+						tilebin[currentindex-1] =  tilebin[currentindex];
+						tilebin[currentindex] = 0;
+						currentindex -= 1;
+					}
+					if((currentindex - 1)%4!= 3 && currentindex - 1 >= 0 && tilebin[currentindex]==tilebin[currentindex - 1]) {
+						tilebin[currentindex] = 0;
+						tilebin[currentindex - 1] *= 2;
+						score += tilebin[currentindex - 1];
+					}
+				}
+			}
+		}
+		return score;
 	}
 
 }
