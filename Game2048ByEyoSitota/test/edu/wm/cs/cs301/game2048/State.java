@@ -1,38 +1,82 @@
 package edu.wm.cs.cs301.game2048;
-
+import java.util.Random;
 import java.util.function.BooleanSupplier;
 
 public class State implements GameState {
-
+	int tilebin[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	public State() {
 		// TODO Auto-generated constructor stub
+		
+		
 	}
 
 	public State(State currentState) {
 		// TODO Auto-generated constructor stub
+		tilebin = currentState.tilebin;
 	}
 
 	@Override
 	public int getValue(int x, int y) {
+		System.out.println("x is " + x);
+		System.out.println("y is " + y);
+		int index = 0;
 		// TODO Auto-generated method stub
-		return 0;
+		for (int i = 0; i < x; i++) {
+			index += 4;
+			}
+		for (int j = 0; j < y; j++) {
+			index += 1;
+			}
+		System.out.println("x is " + x + " y is " + y + " index is " + index);
+		return tilebin[index];
+//		return 0;
 	}
 
 	@Override
 	public boolean addTile() {
 		// TODO Auto-generated method stub
-		return false;
+		Random rand = new Random();
+
+		// Obtain a number between [0 - 49].
+		int randomindex = rand.nextInt(16);
+		while (tilebin[randomindex] != 0) {
+			randomindex = rand.nextInt(16);
+		}
+		tilebin[randomindex] = new Random().nextBoolean() ? 2 : 4;
+		return true;
+//		return false;
 	}
 
 	@Override
 	public boolean isFull() {
 		// TODO Auto-generated method stub
-		return false;
+		for(int i = 0; i < 16; i++) {
+			if(tilebin[i] == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public boolean canMerge() {
 		// TODO Auto-generated method stub
+		for(int i = 0; i < 12; i++) {
+			if(tilebin[i] != 3 || tilebin[i] != 7 || tilebin[i] != 11) {	
+				if((tilebin[i+1] == tilebin[i])||(tilebin[i+4] == tilebin[i])) {
+					return true;
+				}
+			}else {
+				if((tilebin[i+4] == tilebin[i])) {
+					return true;
+				}
+			}
+		}
+		for(int i = 12; i < 15; i++) {
+			if(tilebin[i+1] == tilebin[i]) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -51,12 +95,15 @@ public class State implements GameState {
 	@Override
 	public void setEmptyBoard() {
 		// TODO Auto-generated method stub
-		
+		for(int i= 0; i < tilebin.length; i++) {
+			tilebin[i] = 0;
+		}
 	}
 
 	@Override
 	public int left() {
 		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
