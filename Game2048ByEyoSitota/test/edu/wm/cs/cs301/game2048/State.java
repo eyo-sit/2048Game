@@ -55,7 +55,6 @@ public class State implements GameState {
 				return false;
 			}
 		}
-		System.out.println("Finally");
 		return true;
 	}
 
@@ -217,5 +216,12 @@ public class State implements GameState {
 		}
 		return score;
 	}
-
+	public boolean equals(State o) {
+		for(int i = 0; i < tilebin.length; i++) {
+			if(this.tilebin[i] != o.tilebin[i]) {
+			return false;
+			}
+		}
+		return true;
+	}
 }
