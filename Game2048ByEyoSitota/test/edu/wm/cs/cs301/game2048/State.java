@@ -36,15 +36,15 @@ public class State implements GameState {
 
 		// Obtain a number between [0 - 49].
 		int randomindex = rand.nextInt(16);
-		if(!isFull()) {
+//		if(!isFull()) {
 		while (tilebin[randomindex] != 0) {
 			randomindex = rand.nextInt(16);
 		}
 		tilebin[randomindex] = new Random().nextBoolean() ? 2 : 4;
 		return true;
-		}else {
-			return false;
-		}
+//		}else {
+//			return false;
+//		}
 	}
 
 	@Override
